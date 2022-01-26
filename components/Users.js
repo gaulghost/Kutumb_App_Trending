@@ -41,7 +41,6 @@ function Users() {
     const unique = [...new Set(userData.map(item => item.language))];
     console.log("unique : ", unique);
     const grouped = groupBy(userData, user => user.language);
-    // console.log("Grouped Array Items : ", grouped);
     const [shimmerScreen, setShimmerScreen] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
 
@@ -54,6 +53,12 @@ function Users() {
     const changeSetShimmerValue = () => {
         console.log('Shimmer Set');
         setShimmerScreen(true);
+    }
+
+    const disableErrorPage = () => {
+        setShimmerScreen(true);
+        delay(1000).then(() => setShimmerScreen(false));
+        setFetchFailed(false);
     }
 
     const fetchApi = () => {
@@ -113,7 +118,7 @@ function Users() {
                         }
                     </ScrollView>
                 </>
-                : <ErrorCard api={fetchApi} shimmerset = {changeSetShimmerValue}/>
+                : <ErrorCard api={fetchApi} shimmerset = {changeSetShimmerValue} disableError = {disableErrorPage}/>
 
             }
             </>

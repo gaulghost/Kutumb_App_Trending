@@ -1,27 +1,62 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Button } from 'react-native';
 import errorImage from '../assets/images/error.jpg';
+import navDots from '../assets/images/navDots.png';
 
+const navDotsImageUri = Image.resolveAssetSource(navDots).uri
 const errorImageUri = Image.resolveAssetSource(errorImage).uri
 
 const ErrorCard = (props) => {
+    const [textVisible, setTextVisible] = useState(false)
     return(
-        <View style={styles.ImageContainer}>
-            <Image source = {{uri: errorImageUri}} style = {styles.styledImage}></Image>
-            <Text style = {styles.textHeading}>Something Went Wrong</Text>
-            <Text style = {styles.textDetail}>Sorry, Something went wrong there. Try again</Text>
-            <TouchableOpacity onPress={() => {props.api(); props.shimmerset();}} style = {styles.retryButton}><Text style = {styles.buttonText}>RETRY</Text></TouchableOpacity>
+        <View style={styles.Container}>
+            <TouchableOpacity style = {styles.redirectButton} onPress={() => setTextVisible(true)}>
+                {
+                    textVisible == true ?
+                    <>
+                        <TouchableOpacity onPress={props.disableError()}>
+                            <Text style = {styles.redirectText}>Rediect to Saved Data</Text>
+                        </TouchableOpacity>
+                    </>:
+                    <><Image source = {{uri: navDotsImageUri}} style = {styles.redirectImage}></Image></>
+                }
+            </TouchableOpacity>
+            <View style={styles.ImageContainer}>
+                <Image source = {{uri: errorImageUri}} style = {styles.styledImage}></Image>
+                <Text style = {styles.textHeading}>Something Went Wrong</Text>
+                <Text style = {styles.textDetail}>Sorry, Something went wrong there. Try again</Text>
+                <TouchableOpacity onPress={() => {props.api(); props.shimmerset();}} style = {styles.retryButton}><Text style = {styles.buttonText}>RETRY</Text></TouchableOpacity>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    ImageContainer: {
-        justifyContent: "center",
-        alignItems: "center",
+    Container: {
         height: Dimensions.get('window').height,
         width: Dimensions.get('window').width,
         backgroundColor: '#fff'
+    },
+    redirectButton: {
+        margin: 15,
+        marginBottom: 45,
+        alignItems: 'flex-end'
+    },
+    redirectImage: {
+        height: 20,
+        width: 20,
+        opacity: 0.7
+    },
+    redirectText: {
+        fontSize: 12,
+        color: '#606060',
+        fontWeight: '700',
+        textAlign: 'right',
+        height: 20
+    },
+    ImageContainer: {
+        justifyContent: "center",
+        alignItems: "center"
     },
     styledImage: {
         height: Dimensions.get('window').width - 20,
