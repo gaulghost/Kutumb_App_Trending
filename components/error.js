@@ -10,7 +10,7 @@ const ErrorCard = (props) => {
             <Image source = {{uri: errorImageUri}} style = {styles.styledImage}></Image>
             <Text style = {styles.textHeading}>Something Went Wrong</Text>
             <Text style = {styles.textDetail}>Sorry, Something went wrong there. Try again</Text>
-            <TouchableOpacity onPress={() => props.api()} style = {styles.retryButton}><Text style = {styles.buttonText}>RETRY</Text></TouchableOpacity>
+            <TouchableOpacity onPress={() => {props.api(); props.shimmerset();}} style = {styles.retryButton}><Text style = {styles.buttonText}>RETRY</Text></TouchableOpacity>
         </View>
     );
 }

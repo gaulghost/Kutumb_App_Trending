@@ -10,7 +10,7 @@ const UserCard = (props) => {
     const [isNotHidden, setIsNotHidden] = useState(false);
 
     return (
-        <TouchableOpacity style = {styles.container} onPress={() => setIsNotHidden(!isNotHidden)}>
+        <TouchableOpacity key={props.key} style = {styles.container} onPress={() => setIsNotHidden(!isNotHidden)}>
             <View style = {styles.ImageContainer}>
                 <Image source={{uri: props.avatar}} style = {styles.UserImage}/>
             </View>

@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, Button } f
 
 const LanguageBar = (props) => {
     return(
-        <View style={styles(props).LanguageContainer}>
+        <View key={props.key} style={styles(props).LanguageContainer}>
             <Text style = {styles(props).textDetail}>{props.language}</Text>
         </View>
     );

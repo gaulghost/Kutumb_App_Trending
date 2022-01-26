@@ -1,70 +1,28 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
-// import Shimmer from 'react-native-shimmer';
-// import Shimmer from 'react-shimmer-effect';
-// import ContentLoader from 'react-content-loader/native'
+import ContentLoader, { Facebook, Rect, Circle } from 'react-content-loader/native'
 
+const MyLoader1 = () => (
+    <ContentLoader viewBox="0 0 400 70" foregroundColor='#999999' backgroundColor='#e1e1e1'>
+      <Circle cx="30" cy="30" r="30" />
+      <Rect x="80" y="17" rx="4" ry="4" width="200" height="13" />
+      <Rect x="80" y="40" rx="3" ry="3" width="300" height="10" />
+    </ContentLoader>
+  )
 
 const UserShimmerCard = (props) => {
     return (
         <View style = {styles.container}>
-            <View style = {styles.circle}>
-            </View>
-            <View style = {styles.UserData}>
-                <Text style = {styles.line}></Text>
-                <Text style = {styles.line1}></Text>
-            </View>
+            <MyLoader1/>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F5F5F5',
-        marginTop: 2,
-        flex: 1,
-        flexDirection: 'row',
-        paddingBottom: 10,
-        paddingTop: 10,
+        backgroundColor: '#f6f7f8',
+        padding: 20,
         height: 70
-    },
-    circle: {
-        marginLeft: 15,
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        borderWidth: 0.2 ,
-        borderColor: '#606060',
-        paddingLeft: 10,
-        paddingRight: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
-        backgroundColor: '#edeef1'
-    },
-    UserData: {
-        paddingLeft: 15,
-        paddingRight: 20
-    },
-    line: {
-        borderRadius: 10,
-        borderWidth: 0.2,
-        borderColor: '#606060',
-        width: 100,
-        height: 15,
-        backgroundColor: '#edeef1'
-    },
-    line1: {
-        marginTop: 15,
-        borderRadius: 10,
-        borderWidth: 0.2,
-        borderColor: '#606060',
-        width: 230,
-        height: 15,
-        color: '#000',
-        backgroundColor: '#edeef1'
-    },
-    shimmer: {
-        // backgroundColor: '#f6f7f8'
     }
 });
 
