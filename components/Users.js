@@ -74,13 +74,13 @@ function Users() {
             console.log(response)
             setUserData(response.data)
             setFetchFailed(false)
-            delay(3000).then(() => setShimmerScreen(false));
+            delay(2000).then(() => setShimmerScreen(false));
             // setShimmerScreen(false)
         })
         .catch((err) => {
             console.log(err);
             setFetchFailed(true)
-            delay(3000).then(() => setShimmerScreen(false));
+            delay(2000).then(() => setShimmerScreen(false));
             // setShimmerScreen(false)
         })
     }

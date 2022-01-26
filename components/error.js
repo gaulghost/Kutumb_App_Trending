@@ -6,21 +6,36 @@ import navDots from '../assets/images/navDots.png';
 const navDotsImageUri = Image.resolveAssetSource(navDots).uri
 const errorImageUri = Image.resolveAssetSource(errorImage).uri
 
+const CustomNavBarList = (props) => {
+    return(
+        <View style = {styles.redirectButton}>
+            <TouchableOpacity onPress={() => props.disableError()}>
+                <Text style = {styles.redirectText}>Rediect to Saved Data</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.setText(false)}>
+                <Text style = {styles.redirectText}>Back</Text>
+            </TouchableOpacity>
+        </View>
+    );
+}
+
+const CustomNavBar = (props) => {
+    return(
+        <TouchableOpacity style = {styles.redirectButton} onPress={() => props.setText(true)}>
+            <Image source = {{uri: navDotsImageUri}} style = {styles.redirectImage}></Image>
+        </TouchableOpacity>
+    );
+}
+
 const ErrorCard = (props) => {
     const [textVisible, setTextVisible] = useState(false)
     return(
         <View style={styles.Container}>
-            <TouchableOpacity style = {styles.redirectButton} onPress={() => setTextVisible(true)}>
-                {
-                    textVisible == true ?
-                    <>
-                        <TouchableOpacity onPress={props.disableError()}>
-                            <Text style = {styles.redirectText}>Rediect to Saved Data</Text>
-                        </TouchableOpacity>
-                    </>:
-                    <><Image source = {{uri: navDotsImageUri}} style = {styles.redirectImage}></Image></>
-                }
-            </TouchableOpacity>
+            {
+                textVisible == true ?
+                <CustomNavBarList disableError = {props.disableError} setText = {setTextVisible}/>:
+                <CustomNavBar setText = {setTextVisible}/>
+            }
             <View style={styles.ImageContainer}>
                 <Image source = {{uri: errorImageUri}} style = {styles.styledImage}></Image>
                 <Text style = {styles.textHeading}>Something Went Wrong</Text>
