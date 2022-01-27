@@ -8,26 +8,26 @@ const forkImageUri = Image.resolveAssetSource(forkImage).uri
 
 const UserCard = (props) => {
     const [isNotHidden, setIsNotHidden] = useState(false);
-
+    console.log(props);
     return (
-        <TouchableOpacity key={props.key} style = {styles.container} onPress={() => setIsNotHidden(!isNotHidden)}>
+        <TouchableOpacity key={props.user.item.key} style = {styles.container} onPress={() => setIsNotHidden(!isNotHidden)}>
             <View style = {styles.ImageContainer}>
-                <Image source={{uri: props.avatar}} style = {styles.UserImage}/>
+                <Image source={{uri: props.user.item.avatar}} style = {styles.UserImage}/>
             </View>
             <View style = {styles.UserData}>
-                <Text style = {styles.RepoAuthor}>{props.author}</Text>
-                <Text style = {styles.RepoName}>{props.reponame}</Text>
+                <Text style = {styles.RepoAuthor}>{props.user.item.author}</Text>
+                <Text style = {styles.RepoName}>{props.user.item.name}</Text>
             {
                 isNotHidden ? (
                     <View>
-                        <Text style = {styles.RepoDesc}>{props.description}</Text>
+                        <Text style = {styles.RepoDesc}>{props.user.item.description}</Text>
                         <View style = {styles.RepoSubDetails}>
-                            <View style = {circleStyles(props).icon}></View>
-                            <Text style = {styles.GitText}>{props.language}</Text>
+                            <View style = {circleStyles(props.user.item).icon}></View>
+                            <Text style = {styles.GitText}>{props.user.item.language}</Text>
                             <Image source={{uri: starredstarImageUri}} style = {styles.GitImage}/>
-                            <Text style = {styles.GitText}>{props.stars}</Text>
+                            <Text style = {styles.GitText}>{props.user.item.stars}</Text>
                             <Image source={{uri: forkImageUri}} style = {styles.GitImage}/>
-                            <Text style = {styles.GitText}>{props.forks}</Text>
+                            <Text style = {styles.GitText}>{props.user.item.forks}</Text>
                         </View>
                     </View>
                 ) : null
@@ -42,7 +42,7 @@ const circleStyles = (props) => StyleSheet.create({
         height: 15,
         width: 15,
         borderRadius: 50,
-        backgroundColor: props.iconColor
+        backgroundColor: props.languageColor
     }
 });
 

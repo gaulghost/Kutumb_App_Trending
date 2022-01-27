@@ -10,7 +10,7 @@ const CustomNavBarList = (props) => {
     return(
         <View style = {styles.redirectButton}>
             <TouchableOpacity onPress={() => props.disableError()}>
-                <Text style = {styles.redirectText}>Rediect to Saved Data</Text>
+                <Text style = {styles.redirectText}>Redirect to Saved Data</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.setText(false)}>
                 <Text style = {styles.redirectText}>Back</Text>

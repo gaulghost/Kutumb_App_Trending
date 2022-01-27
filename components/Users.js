@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ScrollView, FlatList, Text} from 'react-native';
+import { ScrollView, FlatList, Text, RefreshControl, View} from 'react-native';
 import UserCard from './UserCard';
 import data from './data';
 import ErrorCard from './error';
@@ -39,7 +39,6 @@ function Users() {
     const [userData, setUserData] = useState(data);
     const [fetchfailed, setFetchFailed] = useState(false);
     const unique = [...new Set(userData.map(item => item.language))];
-    console.log("unique : ", unique);
     const grouped = groupBy(userData, user => user.language);
     const [shimmerScreen, setShimmerScreen] = useState(true)
     const [refreshing, setRefreshing] = useState(false)
@@ -51,7 +50,6 @@ function Users() {
     }
 
     const changeSetShimmerValue = () => {
-        console.log('Shimmer Set');
         setShimmerScreen(true);
     }
 
@@ -62,7 +60,6 @@ function Users() {
     }
 
     const fetchApi = () => {
-        console.log("fetch");
         axios({
             method: "GET",
             url: "https://ghapi.huchen.dev/repositories",
@@ -75,13 +72,11 @@ function Users() {
             setUserData(response.data)
             setFetchFailed(false)
             delay(2000).then(() => setShimmerScreen(false));
-            // setShimmerScreen(false)
         })
         .catch((err) => {
             console.log(err);
             setFetchFailed(true)
             delay(2000).then(() => setShimmerScreen(false));
-            // setShimmerScreen(false)
         })
     }
 
@@ -101,22 +96,57 @@ function Users() {
                 fetchfailed == false ? 
                 <>
                 <NavBar/>
-                {/* <FlatList/> */}
-                    <ScrollView>
-                        {   unique.map((item) =>{
-                                const userDataLang = grouped.get(item);
-                                return(
-                                    <>
-                                        <LanguageBar key={item} language = {item} color = {userDataLang[0].languageColor}/>
-                                        {userDataLang.map((user) => {
-                                            {/* console.log(user); */}
-                                            return <UserCard key={user["author"]} author={user["author"]}  reponame={user["name"]} avatar={user["avatar"]} description={user["description"]} language={user["language"]} stars={user["stars"]} forks={user["forks"]} iconColor={user["languageColor"]}/>
-                                        })}
-                                    </>
-                                )
-                            })
-                        }
-                    </ScrollView>
+                <View>
+                    {   unique.map((item) =>{
+                            const userDataLang = grouped.get(item);
+                            return(
+                                <>
+                                    <LanguageBar key={item} language  = {item} color = {userDataLang[0].languageColor}/>
+                                    <FlatList
+                                        data={userDataLang}
+                                        renderItem={(item) => <UserCard user = {item}/>}
+                                        keyExtractor={(item) => item.author}
+                                        refreshControl={<RefreshControl refreshing = {refreshing} onRefresh={fetchApi}/>}
+                                    />
+                                </>
+                            )
+                        })
+                    }
+                </View>
+                {/* <ScrollView>
+                    {   unique.map((item) =>{
+                            const userDataLang = grouped.get(item);
+                            return(
+                                <>
+                                    <LanguageBar key={item} language  = {item} color = {userDataLang[0].languageColor}/>
+                                    {userDataLang.map((user) => {
+                                        return <UserCard user={user}/>
+                                    })}
+                                </>
+                            )
+                        })
+                    }
+                </ScrollView> */}
+                {/* <FlatList>
+                    data = {unique}
+                    renderItem = 
+                        {(item) =>{
+                            const userDataLang = grouped.get(item);
+                            console.log("Unique : ",unique);
+                            console.log("Item : ",item);
+                            console.log("User Data per Language : ",userDataLang);
+                            return(
+                                <>
+                                    <LanguageBar key={item} language  = {item} color = {userDataLang[0].languageColor}/>
+                                    {userDataLang.map((user) => {
+                                        return <UserCard user={user}/>
+                                    })}
+                                </>
+                            )
+                        }}
+                    keyExtractor = {item => item[0].languageColor+'1'}
+                    refreshControl = {<RefreshControl refreshing = {refreshing} onRefresh={fetchApi}/>}
+                </FlatList> */}
                 </>
                 : <ErrorCard api={fetchApi} shimmerset = {changeSetShimmerValue} disableError = {disableErrorPage}/>
 
