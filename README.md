@@ -13,3 +13,5 @@
 <img src="https://user-images.githubusercontent.com/49186033/151174671-a05c60a3-6ed6-4237-92de-536920ed2f73.png" width="450" /> 
 <h2> 4. The Trending data has been divided into sets of different Languages and each card can be clicked on to expand the card. </h2>
 <img src="https://user-images.githubusercontent.com/49186033/151165994-c6e3598d-e32d-46df-b77a-aebc7a7a2f3f.png" width="450" /> 
+<h2> 4. List can be pulled down to Refresh (Fetch data from API). </h2>
+<img src="https://user-images.githubusercontent.com/49186033/151314693-20ffff82-e6df-46bf-ba49-be43dafb8b8e.png" width="450" /> 
